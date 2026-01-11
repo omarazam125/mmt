@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Label } from "@/components/ui/label"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Phone, PhoneMissed, Loader2, Users, CheckCircle2 } from "lucide-react"
+import { Phone, PhoneMissed, Loader2, Users, CheckCircle2, Mail } from "lucide-react"
 import { useState, useEffect } from "react"
 import { useToast } from "@/hooks/use-toast"
 import { useTwilioVoice } from "@/hooks/use-twilio-voice"
@@ -59,6 +59,7 @@ export default function CallsPage() {
   const [callError, setCallError] = useState<string | null>(null)
   const [callingContactIds, setCallingContactIds] = useState<Set<string>>(new Set())
   const [liveCalls, setLiveCalls] = useState<LiveCall[]>([])
+  const [isSendingEmail, setIsSendingEmail] = useState(false)
   const { toast } = useToast()
   const twilioVoice = useTwilioVoice()
 
@@ -247,6 +248,55 @@ export default function CallsPage() {
     }
   }
 
+  const handleSendEmailNotification = async () => {
+    if (!selectedEmployee) return
+
+    setIsSendingEmail(true)
+
+    try {
+      console.log("[v0] Sending email notification for employee:", selectedEmployee.name)
+
+      const response = await fetch("/api/webhook/send-notification", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          employee: {
+            id: selectedEmployee.id,
+            name: selectedEmployee.name,
+            email: selectedEmployee.email,
+            department: selectedEmployee.department,
+            position: selectedEmployee.position,
+          },
+          contacts: selectedEmployee.contacts,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to send email notification")
+      }
+
+      toast({
+        title: "Email Notification Sent",
+        description: `Notification sent successfully for ${selectedEmployee.name}`,
+      })
+
+      console.log("[v0] Email notification sent successfully")
+    } catch (error) {
+      console.error("[v0] Error sending email notification:", error)
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to send email notification",
+        variant: "destructive",
+      })
+    } finally {
+      setIsSendingEmail(false)
+    }
+  }
+
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
       case "manager":
@@ -400,24 +450,45 @@ export default function CallsPage() {
                     </div>
                   </div>
 
-                  <Button
-                    className="w-full gap-2 bg-primary hover:bg-primary/90 mt-6"
-                    onClick={handleStartEvaluation}
-                    disabled={isCallLoading || !selectedEmployee || selectedEmployee.contacts.length === 0}
-                    size="lg"
-                  >
-                    {isCallLoading ? (
-                      <>
-                        <Loader2 className="h-5 w-5 animate-spin" />
-                        Starting Evaluation Calls...
-                      </>
-                    ) : (
-                      <>
-                        <Phone className="h-5 w-5" />
-                        Start Evaluation ({selectedEmployee.contacts.length} Calls)
-                      </>
-                    )}
-                  </Button>
+                  <div className="flex gap-3 mt-6">
+                    <Button
+                      className="flex-1 gap-2 bg-blue-600 hover:bg-blue-700 text-white"
+                      onClick={handleSendEmailNotification}
+                      disabled={isSendingEmail || !selectedEmployee}
+                      size="lg"
+                    >
+                      {isSendingEmail ? (
+                        <>
+                          <Loader2 className="h-5 w-5 animate-spin" />
+                          Sending Email...
+                        </>
+                      ) : (
+                        <>
+                          <Mail className="h-5 w-5" />
+                          Email Notification
+                        </>
+                      )}
+                    </Button>
+
+                    <Button
+                      className="flex-1 gap-2 bg-primary hover:bg-primary/90"
+                      onClick={handleStartEvaluation}
+                      disabled={isCallLoading || !selectedEmployee || selectedEmployee.contacts.length === 0}
+                      size="lg"
+                    >
+                      {isCallLoading ? (
+                        <>
+                          <Loader2 className="h-5 w-5 animate-spin" />
+                          Starting Calls...
+                        </>
+                      ) : (
+                        <>
+                          <Phone className="h-5 w-5" />
+                          Start Evaluation ({selectedEmployee.contacts.length} Calls)
+                        </>
+                      )}
+                    </Button>
+                  </div>
                 </>
               )}
             </CardContent>
