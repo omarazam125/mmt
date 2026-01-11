@@ -16,9 +16,8 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "At least one transcript is required" }, { status: 400 })
     }
 
-    console.log("[v0] Generating AI evaluation with Gemini...")
-    const geminiApiKey = process.env.GEMINI_API_KEY || "AIzaSyADIe8i4RD8RG4zGgQY-UcNA6LfaWQiSrk"
-    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiApiKey}`
+    console.log("[v0] Generating AI evaluation with GPT-4...")
+    const openaiApiKey = process.env.OPENAI_API_KEY || "AIzaSyADIe8i4RD8RG4zGgQY-UcNA6LfaWQiSrk"
 
     const evaluationPrompt = `أنت خبير في تقييم أداء الموظفين باستخدام منهجية التقييم 360 درجة.
 
@@ -86,105 +85,49 @@ ${call.transcript || "لا يوجد نص متاح"}
 
 قدم تقييماً شاملاً ومتوازناً وقابلة للتنفيذ بناءً على مصادر متعددة. كن محدداً وعادلاً وبناءً.`
 
-    const geminiResponse = await fetch(geminiUrl, {
+    const openaiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${openaiApiKey}`,
       },
       body: JSON.stringify({
-        systemInstruction: {
-          parts: [
-            {
-              text: "أنت خبير موارد بشرية متخصص في تقييم الأداء وتحليل التقييم 360 درجة. قدم تقييمات شاملة ومتوازنة وقابلة للتنفيذ بناءً على مصادر متعددة. كن محدداً وعادلاً وبناءً.",
-            },
-          ],
-        },
-        contents: [
+        model: "gpt-4",
+        messages: [
           {
-            parts: [
-              {
-                text: evaluationPrompt,
-              },
-            ],
+            role: "system",
+            content:
+              "أنت خبير موارد بشرية متخصص في تقييم الأداء وتحليل التقييم 360 درجة. قدم تقييمات شاملة ومتوازنة وقابلة للتنفيذ بناءً على مصادر متعددة. كن محدداً وعادلاً وبناءً.",
+          },
+          {
+            role: "user",
+            content: evaluationPrompt,
           },
         ],
-        generationConfig: {
-          temperature: 0.7,
-          maxOutputTokens: 8192,
-          responseMimeType: "application/json",
-          responseSchema: {
-            type: "object",
-            properties: {
-              overallSummary: { type: "string" },
-              keyStrengths: {
-                type: "array",
-                items: { type: "string" },
-              },
-              areasForImprovement: {
-                type: "array",
-                items: { type: "string" },
-              },
-              performanceMetrics: {
-                type: "object",
-                properties: {
-                  overallScore: { type: "integer" },
-                  communicationSkills: { type: "integer" },
-                  technicalCompetence: { type: "integer" },
-                  customerService: { type: "integer" },
-                  teamwork: { type: "integer" },
-                  problemSolving: { type: "integer" },
-                },
-                required: [
-                  "overallScore",
-                  "communicationSkills",
-                  "technicalCompetence",
-                  "customerService",
-                  "teamwork",
-                  "problemSolving",
-                ],
-              },
-              recommendations: {
-                type: "array",
-                items: { type: "string" },
-              },
-              feedbackAnalysis: { type: "string" },
-              careerDevelopment: {
-                type: "array",
-                items: { type: "string" },
-              },
-            },
-            required: [
-              "overallSummary",
-              "keyStrengths",
-              "areasForImprovement",
-              "performanceMetrics",
-              "recommendations",
-              "feedbackAnalysis",
-              "careerDevelopment",
-            ],
-          },
-        },
+        temperature: 0.7,
+        max_tokens: 8192,
+        response_format: { type: "json_object" },
       }),
     })
 
-    if (!geminiResponse.ok) {
-      console.error("[v0] Gemini API error:", geminiResponse.status)
-      const errorText = await geminiResponse.text()
+    if (!openaiResponse.ok) {
+      console.error("[v0] OpenAI API error:", openaiResponse.status)
+      const errorText = await openaiResponse.text()
       console.error("[v0] Error details:", errorText)
-      return NextResponse.json({ error: "Failed to generate evaluation" }, { status: geminiResponse.status })
+      return NextResponse.json({ error: "Failed to generate evaluation" }, { status: openaiResponse.status })
     }
 
-    const geminiData = await geminiResponse.json()
-    const evaluationText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || ""
+    const openaiData = await openaiResponse.json()
+    const evaluationText = openaiData.choices?.[0]?.message?.content || ""
 
-    console.log("[v0] Gemini evaluation response received, length:", evaluationText.length)
+    console.log("[v0] GPT-4 evaluation response received, length:", evaluationText.length)
 
     let evaluation
     try {
       evaluation = JSON.parse(evaluationText)
       console.log("[v0] Evaluation parsed successfully")
     } catch (parseError: any) {
-      console.error("[v0] Failed to parse Gemini response:", parseError.message)
+      console.error("[v0] Failed to parse GPT-4 response:", parseError.message)
       return NextResponse.json(
         {
           error: "Failed to parse evaluation response",

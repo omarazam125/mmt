@@ -60,6 +60,7 @@ export default function CallsPage() {
   const [callingContactIds, setCallingContactIds] = useState<Set<string>>(new Set())
   const [liveCalls, setLiveCalls] = useState<LiveCall[]>([])
   const [isSendingEmail, setIsSendingEmail] = useState(false)
+  const [notifiedEmployees, setNotifiedEmployees] = useState<Set<string>>(new Set())
   const { toast } = useToast()
   const twilioVoice = useTwilioVoice()
 
@@ -279,6 +280,8 @@ export default function CallsPage() {
         throw new Error(data.error || "Failed to send email notification")
       }
 
+      setNotifiedEmployees((prev) => new Set(prev).add(selectedEmployee.id))
+
       toast({
         title: "Email Notification Sent",
         description: `Notification sent successfully for ${selectedEmployee.name}`,
@@ -452,15 +455,24 @@ export default function CallsPage() {
 
                   <div className="flex gap-3 mt-6">
                     <Button
-                      className="flex-1 gap-2 bg-blue-600 hover:bg-blue-700 text-white"
+                      className={
+                        notifiedEmployees.has(selectedEmployee.id)
+                          ? "flex-1 gap-2 bg-green-600 hover:bg-green-700 text-white"
+                          : "flex-1 gap-2 bg-blue-600 hover:bg-blue-700 text-white"
+                      }
                       onClick={handleSendEmailNotification}
-                      disabled={isSendingEmail || !selectedEmployee}
+                      disabled={isSendingEmail || !selectedEmployee || notifiedEmployees.has(selectedEmployee.id)}
                       size="lg"
                     >
                       {isSendingEmail ? (
                         <>
                           <Loader2 className="h-5 w-5 animate-spin" />
                           Sending Email...
+                        </>
+                      ) : notifiedEmployees.has(selectedEmployee.id) ? (
+                        <>
+                          <CheckCircle2 className="h-5 w-5" />
+                          Notified ✓
                         </>
                       ) : (
                         <>
