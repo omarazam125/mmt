@@ -15,6 +15,7 @@ interface Contact {
   id: string
   name: string
   phone: string
+  email: string
   role:
     | "colleague"
     | "manager"
@@ -55,6 +56,7 @@ export default function EmployeeContactsPage() {
     id: "",
     name: "",
     phone: "",
+    email: "",
     role: "colleague" as const,
     language: "en" as const,
   })
@@ -124,7 +126,7 @@ export default function EmployeeContactsPage() {
     })
 
     saveEmployees(updatedEmployees)
-    setNewContact({ id: "", name: "", phone: "", role: "colleague", language: "en" })
+    setNewContact({ id: "", name: "", phone: "", email: "", role: "colleague", language: "en" })
     setIsAddingContact(false)
     setCurrentEmployee(null)
   }
@@ -340,6 +342,12 @@ export default function EmployeeContactsPage() {
                               <Phone className="h-3 w-3" />
                               {contact.phone}
                             </div>
+                            {contact.email && (
+                              <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                                <Mail className="h-3 w-3" />
+                                {contact.email}
+                              </div>
+                            )}
                           </div>
                           <Button
                             variant="ghost"
@@ -440,6 +448,16 @@ export default function EmployeeContactsPage() {
                 placeholder="+96812345678"
                 value={newContact.phone}
                 onChange={(e) => setNewContact({ ...newContact, phone: e.target.value })}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="contact-email">Email Address</Label>
+              <Input
+                id="contact-email"
+                type="email"
+                placeholder="ahmed@example.com"
+                value={newContact.email}
+                onChange={(e) => setNewContact({ ...newContact, email: e.target.value })}
               />
             </div>
             <div className="space-y-2">

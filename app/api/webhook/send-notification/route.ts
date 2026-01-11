@@ -17,6 +17,7 @@ export async function POST(request: NextRequest) {
       contacts: contacts.map((contact: any) => ({
         name: contact.name,
         phone: contact.phone,
+        email: contact.email || "", // Include contact email
         role: contact.role,
         language: contact.language,
       })),
