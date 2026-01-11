@@ -10,7 +10,7 @@ This dashboard provides a comprehensive call center management system for STC (S
 ### Features:
 - **Language Selection**: Choose between English and Arabic (Khaleeji/Gulf accent) for each call
 - **Voice Configuration**: 
-  - Arabic: Uses Azure `ar-AE-FatimaNeural` (UAE Arabic with Khaleeji accentf)
+  - Arabic: Uses Azure `ar-AE-FatimaNeural` (UAE Arabic with Khaleeji accent)
   - English: Uses Azure `en-US-AndrewNeural`
 - **Speech Recognition**: Automatic language detection with Deepgram Nova-2
 - **Dynamic Prompts**: System prompts adapt based on selected language
