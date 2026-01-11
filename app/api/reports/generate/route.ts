@@ -156,8 +156,9 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    console.log("[v0] Generating AI analysis with GPT-4...")
-    const openaiApiKey = process.env.OPENAI_API_KEY || "AIzaSyADIe8i4RD8RG4zGgQY-UcNA6LfaWQiSrk"
+    console.log("[v0] Generating AI analysis with Gemini...")
+    const geminiApiKey = "AIzaSyADIe8i4RD8RG4zGgQY-UcNA6LfaWQiSrk"
+    const geminiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiApiKey}`
 
     const analysisPrompt = `⚠️ IMPORTANT: All output must be in English only ⚠️
 
@@ -250,42 +251,95 @@ Provide a comprehensive assessment of the customer's behavior and cooperation (N
 - Determine customer mood as ONE word: happy, satisfied, neutral, frustrated, or angry
 - Extract discussion points in detail and helpfully ⚠️`
 
-    const openaiResponse = await fetch("https://api.openai.com/v1/chat/completions", {
+    const geminiResponse = await fetch(geminiUrl, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${openaiApiKey}`,
       },
       body: JSON.stringify({
-        model: "gpt-4",
-        messages: [
+        systemInstruction: {
+          parts: [
+            {
+              text: "You are a specialized analyst in evaluating customer behavior and cooperation in Almoayyed (Y.K. Almoayyed & Sons) customer service center. You must assess the customer's behavior and cooperation, NOT the employee. All your responses must be in English only. Provide a comprehensive and detailed analysis focusing on the customer's cooperation, seriousness of their responses, and overall behavior.",
+            },
+          ],
+        },
+        contents: [
           {
-            role: "system",
-            content:
-              "You are a specialized analyst in evaluating customer behavior and cooperation in Almoayyed (Y.K. Almoayyed & Sons) customer service center. You must assess the customer's behavior and cooperation, NOT the employee. All your responses must be in English only. Provide a comprehensive and detailed analysis focusing on the customer's cooperation, seriousness of their responses, and overall behavior.",
-          },
-          {
-            role: "user",
-            content: analysisPrompt,
+            parts: [
+              {
+                text: analysisPrompt,
+              },
+            ],
           },
         ],
-        temperature: 0.7,
-        max_tokens: 8192,
-        response_format: { type: "json_object" },
+        generationConfig: {
+          temperature: 0.7,
+          maxOutputTokens: 8192,
+          responseMimeType: "application/json",
+          responseSchema: {
+            type: "object",
+            properties: {
+              customerName: { type: "string" },
+              customerMood: {
+                type: "string",
+                enum: ["happy", "satisfied", "neutral", "frustrated", "angry"],
+              },
+              customerBehavior: {
+                type: "object",
+                properties: {
+                  score: { type: "integer" },
+                  description: { type: "string" },
+                },
+                required: ["score", "description"],
+              },
+              keyDiscussionPoints: {
+                type: "array",
+                items: { type: "string" },
+              },
+              customerAssessmentQuestions: {
+                type: "array",
+                items: {
+                  type: "object",
+                  properties: {
+                    question: { type: "string" },
+                    answer: { type: "string" },
+                    status: { type: "string" },
+                  },
+                  required: ["question", "answer", "status"],
+                },
+              },
+              customerRecommendations: {
+                type: "array",
+                items: { type: "string" },
+              },
+              customerOverallScore: { type: "integer" },
+            },
+            required: [
+              "customerName",
+              "customerMood",
+              "customerBehavior",
+              "keyDiscussionPoints",
+              "customerAssessmentQuestions",
+              "customerRecommendations",
+              "customerOverallScore",
+            ],
+          },
+        },
       }),
     })
 
-    if (!openaiResponse.ok) {
-      console.error("[v0] OpenAI API error:", openaiResponse.status)
-      const errorText = await openaiResponse.text()
+    if (!geminiResponse.ok) {
+      console.error("[v0] Gemini API error:", geminiResponse.status)
+      const errorText = await geminiResponse.text()
       console.error("[v0] Error details:", errorText)
-      return NextResponse.json({ error: "Failed to generate analysis" }, { status: openaiResponse.status })
+      return NextResponse.json({ error: "Failed to generate analysis" }, { status: geminiResponse.status })
     }
 
-    const openaiData = await openaiResponse.json()
-    const analysisText = openaiData.choices?.[0]?.message?.content || ""
+    const geminiData = await geminiResponse.json()
+    const analysisText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || ""
 
-    console.log("[v0] GPT-4 response received, length:", analysisText.length)
+    console.log("[v0] Gemini response received, length:", analysisText.length)
     console.log("[v0] Response preview:", analysisText.substring(0, 500))
 
     let analysis
@@ -348,13 +402,13 @@ Provide a comprehensive assessment of the customer's behavior and cooperation (N
         }
       }
     } catch (parseError: any) {
-      console.error("[v0] Failed to parse GPT-4 response:", parseError.message)
+      console.error("[v0] Failed to parse Gemini response:", parseError.message)
       console.error("[v0] Full response text:", analysisText.substring(0, 2000))
 
       return NextResponse.json(
         {
-          error: "Failed to parse GPT-4 response. Please try again.",
-          details: "A response was received from GPT-4, but it could not be parsed correctly.",
+          error: "Failed to parse Gemini response. Please try again.",
+          details: "A response was received from Gemini, but it could not be parsed correctly.",
           responsePreview: analysisText.substring(0, 500),
         },
         { status: 500 },
