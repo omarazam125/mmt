@@ -16,17 +16,7 @@ interface Contact {
   name: string
   phone: string
   email: string
-  role:
-    | "colleague"
-    | "manager"
-    | "partner"
-    | "subordinate"
-    | "cross-department"
-    | "client"
-    | "vendor"
-    | "team-lead"
-    | "senior-manager"
-    | "consultant"
+  role: "Department Director" | "Department Manager" | "Client" | "Colleague" | "Subordinate"
   language: "ar" | "en"
 }
 
@@ -57,7 +47,7 @@ export default function EmployeeContactsPage() {
     name: "",
     phone: "",
     email: "",
-    role: "colleague" as const,
+    role: "Colleague" as const,
     language: "en" as const,
   })
 
@@ -126,7 +116,7 @@ export default function EmployeeContactsPage() {
     })
 
     saveEmployees(updatedEmployees)
-    setNewContact({ id: "", name: "", phone: "", email: "", role: "colleague", language: "en" })
+    setNewContact({ id: "", name: "", phone: "", email: "", role: "Colleague", language: "en" })
     setIsAddingContact(false)
     setCurrentEmployee(null)
   }
@@ -146,56 +136,23 @@ export default function EmployeeContactsPage() {
 
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
-      case "manager":
-        return "bg-primary/20 text-primary border-primary/30"
-      case "colleague":
-        return "bg-blue-500/20 text-blue-600 border-blue-500/30"
-      case "partner":
-        return "bg-purple-500/20 text-purple-600 border-purple-500/30"
-      case "subordinate":
-        return "bg-green-500/20 text-green-600 border-green-500/30"
-      case "cross-department":
-        return "bg-cyan-500/20 text-cyan-600 border-cyan-500/30"
-      case "client":
+      case "Department Director":
+        return "bg-gradient-to-r from-purple-600 to-indigo-600 text-white border-purple-700"
+      case "Department Manager":
+        return "bg-gradient-to-r from-blue-600 to-cyan-600 text-white border-blue-700"
+      case "Client":
         return "bg-orange-500/20 text-orange-600 border-orange-500/30"
-      case "vendor":
-        return "bg-amber-500/20 text-amber-600 border-amber-500/30"
-      case "team-lead":
-        return "bg-indigo-500/20 text-indigo-600 border-indigo-500/30"
-      case "senior-manager":
-        return "bg-violet-500/20 text-violet-600 border-violet-500/30"
-      case "consultant":
-        return "bg-pink-500/20 text-pink-600 border-pink-500/30"
+      case "Colleague":
+        return "bg-blue-500/20 text-blue-600 border-blue-500/30"
+      case "Subordinate":
+        return "bg-green-500/20 text-green-600 border-green-500/30"
       default:
         return "bg-muted text-muted-foreground border-muted"
     }
   }
 
   const getRoleLabel = (role: string) => {
-    switch (role) {
-      case "manager":
-        return "Manager"
-      case "colleague":
-        return "Colleague"
-      case "partner":
-        return "Partner"
-      case "subordinate":
-        return "Subordinate"
-      case "cross-department":
-        return "Cross-Department Colleague"
-      case "client":
-        return "Client"
-      case "vendor":
-        return "Vendor/Supplier"
-      case "team-lead":
-        return "Team Lead"
-      case "senior-manager":
-        return "Senior Manager"
-      case "consultant":
-        return "Consultant/Advisor"
-      default:
-        return role
-    }
+    return role
   }
 
   const totalContacts = employees.reduce((sum, emp) => sum + emp.contacts.length, 0)
@@ -470,16 +427,15 @@ export default function EmployeeContactsPage() {
                   <SelectValue placeholder="Select role" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="manager">Manager</SelectItem>
-                  <SelectItem value="senior-manager">Senior Manager</SelectItem>
-                  <SelectItem value="team-lead">Team Lead</SelectItem>
-                  <SelectItem value="colleague">Colleague (Same Department)</SelectItem>
-                  <SelectItem value="cross-department">Colleague (Different Department)</SelectItem>
-                  <SelectItem value="subordinate">Subordinate</SelectItem>
-                  <SelectItem value="partner">Business Partner</SelectItem>
-                  <SelectItem value="client">Client</SelectItem>
-                  <SelectItem value="vendor">Vendor/Supplier</SelectItem>
-                  <SelectItem value="consultant">Consultant/Advisor</SelectItem>
+                  <SelectItem value="Department Director" className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold">
+                    Department Director
+                  </SelectItem>
+                  <SelectItem value="Department Manager" className="bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold">
+                    Department Manager
+                  </SelectItem>
+                  <SelectItem value="Client">Client</SelectItem>
+                  <SelectItem value="Colleague">Colleague</SelectItem>
+                  <SelectItem value="Subordinate">Subordinate</SelectItem>
                 </SelectContent>
               </Select>
             </div>
