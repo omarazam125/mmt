@@ -426,15 +426,17 @@ export default function EmployeeContactsPage() {
                 <SelectTrigger id="contact-role">
                   <SelectValue placeholder="Select role" />
                 </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="Department Director" className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold">
+                <SelectContent className="p-2">
+                  <SelectItem value="Department Director" className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white font-semibold mb-2 rounded-md">
                     Department Director
                   </SelectItem>
-                  <SelectItem value="Department Manager" className="bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold">
+                  <SelectItem value="Department Manager" className="bg-gradient-to-r from-blue-600 to-cyan-600 text-white font-semibold mb-2 rounded-md">
                     Department Manager
                   </SelectItem>
-                  <SelectItem value="Client">Client</SelectItem>
-                  <SelectItem value="Colleague">Colleague</SelectItem>
+                  <SelectItem value="Client" className="bg-gradient-to-r from-orange-500 to-red-500 text-white font-semibold mb-2 rounded-md">
+                    Client
+                  </SelectItem>
+                  <SelectItem value="Colleague" className="mb-1">Colleague</SelectItem>
                   <SelectItem value="Subordinate">Subordinate</SelectItem>
                 </SelectContent>
               </Select>
