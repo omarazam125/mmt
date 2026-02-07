@@ -128,14 +128,14 @@ export default function ReportsPage() {
         <div className="container mx-auto p-6 space-y-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-foreground">Call Reports - Almoayyed</h1>
+              <h1 className="text-3xl font-bold text-foreground">تقارير المكالمات - المعيد</h1>
               <p className="text-muted-foreground mt-1">
-                Comprehensive analytics and AI-powered insights for all customer service calls
+                تحليلات شاملة ورؤى مدعومة بالذكاء الاصطناعي لجميع مكالمات خدمة العملاء
               </p>
             </div>
             <Button onClick={loadReports} variant="outline">
-              <TrendingUp className="w-4 h-4 mr-2" />
-              Refresh
+              <TrendingUp className="w-4 h-4 ml-2" />
+              تحديث
             </Button>
           </div>
 
@@ -143,7 +143,7 @@ export default function ReportsPage() {
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
               <Input
-                placeholder="Search by customer name, phone number, or email..."
+                placeholder="البحث بالاسم أو رقم الهاتف أو البريد الإلكتروني..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-10"
@@ -154,19 +154,19 @@ export default function ReportsPage() {
           {loading ? (
             <div className="text-center py-12">
               <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-              <p className="mt-4 text-muted-foreground">Loading reports...</p>
+              <p className="mt-4 text-muted-foreground">جاري تحميل التقارير...</p>
             </div>
           ) : filteredReports.length === 0 ? (
             <Card className="p-12 text-center">
               <FileText className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-              <h3 className="text-lg font-semibold mb-2">No Reports Found</h3>
+              <h3 className="text-lg font-semibold mb-2">لا توجد تقارير</h3>
               <p className="text-muted-foreground mb-4">
                 {searchQuery
-                  ? "Try adjusting your search criteria"
-                  : "Make calls from the Calls page to see reports here"}
+                  ? "حاول تعديل معايير البحث"
+                  : "قم بإجراء مكالمات من صفحة المكالمات لرؤية التقارير هنا"}
               </p>
               <Link href="/calls">
-                <Button>Go to Calls</Button>
+                <Button>الذهاب للمكالمات</Button>
               </Link>
             </Card>
           ) : (
@@ -183,15 +183,15 @@ export default function ReportsPage() {
                           <h3 className="font-semibold text-lg">{report.customerName || "Unknown"}</h3>
                           <Badge className={getStatusColor(report.status)}>
                             {report.status === "ended"
-                              ? "Completed"
+                              ? "مكتملة"
                               : report.status === "completed"
-                                ? "Completed"
+                                ? "مكتملة"
                                 : report.status === "in-progress"
-                                  ? "In Progress"
-                                  : "Failed"}
+                                  ? "قيد التنفيذ"
+                                  : "فاشلة"}
                           </Badge>
                           {report.language && (
-                            <Badge variant="outline">{report.language === "ar" ? "Arabic" : "English"}</Badge>
+                            <Badge variant="outline">{report.language === "ar" ? "عربي" : "إنجليزي"}</Badge>
                           )}
                         </div>
                         <div className="flex items-center gap-4 text-sm text-muted-foreground">
@@ -203,7 +203,7 @@ export default function ReportsPage() {
                             <Clock className="w-3 h-3" />
                             {formatDuration(report.duration)}
                           </span>
-                          <span>{new Date(report.createdAt).toLocaleString("en-US")}</span>
+                          <span>{new Date(report.createdAt).toLocaleString("ar-SA")}</span>
                         </div>
                       </div>
                     </Link>
@@ -211,7 +211,7 @@ export default function ReportsPage() {
                       {report.analysis?.overallScore && (
                         <div className="text-right">
                           <div className="text-2xl font-bold text-primary">{report.analysis.overallScore}/10</div>
-                          <div className="text-xs text-muted-foreground">Overall Score</div>
+                          <div className="text-xs text-muted-foreground">التقييم الإجمالي</div>
                         </div>
                       )}
                       <Button

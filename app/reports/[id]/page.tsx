@@ -131,7 +131,7 @@ export default function ReportDetailPage() {
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <Loader2 className="w-8 h-8 animate-spin mx-auto mb-4 text-primary" />
-            <p className="text-muted-foreground">Loading report...</p>
+            <p className="text-muted-foreground">جاري تحميل التقرير...</p>
           </div>
         </div>
       </div>
@@ -145,11 +145,11 @@ export default function ReportDetailPage() {
         <div className="flex-1 flex items-center justify-center">
           <div className="text-center">
             <FileText className="w-12 h-12 mx-auto mb-4 text-muted-foreground" />
-            <h3 className="text-lg font-semibold mb-2">Report Not Found</h3>
-            <p className="text-muted-foreground mb-4">This report may have been deleted or doesn't exist.</p>
+            <h3 className="text-lg font-semibold mb-2">التقرير غير موجود</h3>
+            <p className="text-muted-foreground mb-4">ربما تم حذف هذا التقرير أو أنه غير موجود.</p>
             <Button onClick={() => router.push("/logs")} variant="outline">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Customer Records
+              <ArrowLeft className="w-4 h-4 ml-2" />
+              العودة لسجلات العملاء
             </Button>
           </div>
         </div>
@@ -165,25 +165,25 @@ export default function ReportDetailPage() {
         <div className="container mx-auto p-6 space-y-6">
           <div className="flex items-center justify-between">
             <Button onClick={() => router.push("/logs")} variant="outline">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Customer Records
+              <ArrowLeft className="w-4 h-4 ml-2" />
+              العودة لسجلات العملاء
             </Button>
-            <Badge variant="outline">{report.language === "ar" ? "Arabic" : "English"}</Badge>
+            <Badge variant="outline">{report.language === "ar" ? "عربي" : "إنجليزي"}</Badge>
           </div>
 
           {/* Call Overview */}
           <Card className="p-6">
             <div className="flex items-start justify-between mb-6">
               <div>
-                <h1 className="text-2xl font-bold mb-2">Ministry Call Report</h1>
-                <p className="text-muted-foreground">Detailed analysis of customer behavior and cooperation</p>
+                <h1 className="text-2xl font-bold mb-2">تقرير المكالمة - الوزارة</h1>
+                <p className="text-muted-foreground">تحليل مفصل لسلوك العميل والتعاون</p>
               </div>
               {report.analysis && (
                 <div className="text-right">
                   <div className={`text-4xl font-bold ${getScoreColor(report.analysis.customerOverallScore ?? 0)}`}>
                     {report.analysis.customerOverallScore ?? 0}/10
                   </div>
-                  <div className="text-sm text-muted-foreground">Overall Score</div>
+                  <div className="text-sm text-muted-foreground">التقييم الإجمالي</div>
                 </div>
               )}
             </div>
@@ -192,29 +192,29 @@ export default function ReportDetailPage() {
               <div className="flex items-center gap-3">
                 <User className="w-5 h-5 text-muted-foreground" />
                 <div>
-                  <div className="text-sm text-muted-foreground">Customer</div>
+                  <div className="text-sm text-muted-foreground">العميل</div>
                   <div className="font-semibold">{report.customerName}</div>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <Phone className="w-5 h-5 text-muted-foreground" />
                 <div>
-                  <div className="text-sm text-muted-foreground">Phone</div>
+                  <div className="text-sm text-muted-foreground">الهاتف</div>
                   <div className="font-semibold">{report.phoneNumber}</div>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <Clock className="w-5 h-5 text-muted-foreground" />
                 <div>
-                  <div className="text-sm text-muted-foreground">Duration</div>
+                  <div className="text-sm text-muted-foreground">المدة</div>
                   <div className="font-semibold">{formatDuration(report.duration)}</div>
                 </div>
               </div>
               <div className="flex items-center gap-3">
                 <Calendar className="w-5 h-5 text-muted-foreground" />
                 <div>
-                  <div className="text-sm text-muted-foreground">Date</div>
-                  <div className="font-semibold">{new Date(report.createdAt).toLocaleDateString("en-US")}</div>
+                  <div className="text-sm text-muted-foreground">التاريخ</div>
+                  <div className="font-semibold">{new Date(report.createdAt).toLocaleDateString("ar-SA")}</div>
                 </div>
               </div>
             </div>
@@ -223,7 +223,7 @@ export default function ReportDetailPage() {
               <div className="mt-4 flex items-center gap-3">
                 <Mail className="w-5 h-5 text-muted-foreground" />
                 <div>
-                  <div className="text-sm text-muted-foreground">Email</div>
+                  <div className="text-sm text-muted-foreground">البريد الإلكتروني</div>
                   <div className="font-semibold">{report.customerEmail}</div>
                 </div>
               </div>
@@ -237,11 +237,11 @@ export default function ReportDetailPage() {
               <Card className="p-6">
                 <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
                   <FileText className="w-5 h-5" />
-                  Customer Assessment Summary
+                  ملخص تقييم العميل
                 </h2>
                 <div className="mb-4">
                   <div className="flex items-center justify-between mb-2">
-                    <h3 className="font-semibold">Customer Behavior and Cooperation</h3>
+                    <h3 className="font-semibold">سلوك العميل والتعاون</h3>
                     <div
                       className={`text-2xl font-bold ${getScoreColor(report.analysis.customerBehavior?.score ?? 0)}`}
                     >
@@ -249,7 +249,7 @@ export default function ReportDetailPage() {
                     </div>
                   </div>
                   <p className="text-foreground leading-relaxed">
-                    {report.analysis.customerBehavior?.description ?? "No data available"}
+                    {report.analysis.customerBehavior?.description ?? "لا توجد بيانات متاحة"}
                   </p>
                 </div>
               </Card>
@@ -259,7 +259,7 @@ export default function ReportDetailPage() {
                 <Card className="p-6">
                   <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
                     <FileText className="w-5 h-5" />
-                    Key Discussion Points
+                    نقاط النقاش الرئيسية
                   </h2>
                   <ul className="space-y-3">
                     {report.analysis.keyDiscussionPoints.map((point, index) => (
@@ -277,7 +277,7 @@ export default function ReportDetailPage() {
                 report.analysis.customerAssessmentQuestions.length > 0 && (
                   <Card className="p-6">
                     <h2 className="text-xl font-bold mb-4">
-                      Customer Behavior and Cooperation Assessment (10 Criteria)
+                      تقييم سلوك العميل والتعاون (10 معايير)
                     </h2>
                     <div className="space-y-4">
                       {report.analysis.customerAssessmentQuestions.map((q, index) => (
@@ -290,7 +290,7 @@ export default function ReportDetailPage() {
                                   {index + 1}. {q.question}
                                 </h3>
                                 <p className="text-sm text-muted-foreground">
-                                  <span className="font-medium">Answer:</span> {q.answer}
+                                  <span className="font-medium">الإجابة:</span> {q.answer}
                                 </p>
                               </div>
                             </div>
