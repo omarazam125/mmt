@@ -88,8 +88,8 @@ export default function LiveCallsPage() {
     } catch (error) {
       console.error("[v0] Error fetching live calls:", error)
       toast({
-        title: "Error",
-        description: "Failed to load live calls",
+        title: "خطأ",
+        description: "فشل تحميل المكالمات المباشرة",
         variant: "destructive",
       })
     } finally {
@@ -110,8 +110,8 @@ export default function LiveCallsPage() {
   }
 
   const getStatusLabel = (status: string) => {
-    if (status === "in-progress") return "Active Call"
-    if (status === "pending") return "Ringing"
+    if (status === "in-progress") return "مكالمة نشطة"
+    if (status === "pending") return "يرن"
     return status
   }
 
@@ -138,10 +138,10 @@ export default function LiveCallsPage() {
     const diffMs = now.getTime() - date.getTime()
     const diffMins = Math.floor(diffMs / 60000)
 
-    if (diffMins < 1) return "Now"
-    if (diffMins < 60) return `${diffMins}m ago`
+    if (diffMins < 1) return "الآن"
+    if (diffMins < 60) return `منذ ${diffMins} د`
     const diffHours = Math.floor(diffMins / 60)
-    if (diffHours < 24) return `${diffHours}h ago`
+    if (diffHours < 24) return `منذ ${diffHours} س`
     return date.toLocaleDateString("en")
   }
 
@@ -157,13 +157,13 @@ export default function LiveCallsPage() {
     <div className="container mx-auto space-y-6 p-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-sans text-3xl font-bold tracking-tight">Live Calls</h1>
-          <p className="text-muted-foreground">Active and ringing calls in real-time</p>
+          <h1 className="font-sans text-3xl font-bold tracking-tight">المكالمات المباشرة</h1>
+          <p className="text-muted-foreground">المكالمات النشطة والرنين في الوقت الفعلي</p>
         </div>
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-2 rounded-lg bg-success/10 px-3 py-2">
             <Radio className="h-4 w-4 animate-pulse text-success" />
-            <span className="font-sans text-sm font-medium">{liveCalls.length} Live</span>
+            <span className="font-sans text-sm font-medium">{liveCalls.length} مباشر</span>
           </div>
         </div>
       </div>
@@ -172,9 +172,9 @@ export default function LiveCallsPage() {
         <Card>
           <CardContent className="flex flex-col items-center justify-center py-12">
             <Phone className="mb-4 h-12 w-12 text-muted-foreground" />
-            <p className="font-sans text-lg font-medium text-muted-foreground">No active calls at the moment</p>
+            <p className="font-sans text-lg font-medium text-muted-foreground">لا توجد مكالمات نشطة في الوقت الحالي</p>
             <p className="mt-1 text-sm text-muted-foreground">
-              Ongoing and ringing calls will appear here automatically
+              ستظهر المكالمات الجارية والرنين هنا تلقائياً
             </p>
           </CardContent>
         </Card>
@@ -202,23 +202,23 @@ export default function LiveCallsPage() {
               <CardContent className="relative space-y-4">
                 <div className="space-y-2">
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">Duration</span>
+                    <span className="text-muted-foreground">المدة</span>
                     <span className="font-mono font-medium">{formatDuration(call.duration)}</span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">Started</span>
+                    <span className="text-muted-foreground">البداية</span>
                     <span className="font-sans">{formatTime(call.createdAt)}</span>
                   </div>
                   <div className="flex items-center justify-between text-sm">
-                    <span className="text-muted-foreground">Call ID</span>
+                    <span className="text-muted-foreground">معرف المكالمة</span>
                     <span className="font-mono text-xs">{call.jobId.slice(0, 12)}...</span>
                   </div>
                 </div>
 
                 <div className="flex gap-2 pt-2">
                   <Button variant="outline" size="sm" className="flex-1 bg-transparent" disabled>
-                    <PhoneOff className="ml-2 h-4 w-4" />
-                    End Call
+                    <PhoneOff className="mr-2 h-4 w-4" />
+                    إنهاء المكالمة
                   </Button>
                 </div>
               </CardContent>

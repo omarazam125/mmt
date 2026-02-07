@@ -162,9 +162,9 @@ export default function EmployeeContactsPage() {
       <DashboardHeader />
       <main className="flex-1 overflow-y-auto p-6">
         <div className="mb-6">
-          <h1 className="font-sans text-3xl font-bold text-foreground">Employee Evaluation Contacts</h1>
+          <h1 className="font-sans text-3xl font-bold text-foreground">إدارة جهات اتصال الموظفين</h1>
           <p className="mt-1 font-sans text-sm text-muted-foreground">
-            Manage employees and their professional contacts for comprehensive performance evaluation
+            إدارة الموظفين وجهات الاتصال المهنية الخاصة بهم لمكالمات التقييم
           </p>
         </div>
 
@@ -173,7 +173,7 @@ export default function EmployeeContactsPage() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-sans text-sm font-medium text-muted-foreground">Total Employees</p>
+                  <p className="font-sans text-sm font-medium text-muted-foreground">إجمالي الموظفين</p>
                   <h3 className="mt-2 font-sans text-3xl font-bold text-card-foreground">{employees.length}</h3>
                 </div>
                 <div className="rounded-lg bg-primary/10 p-3">
@@ -186,7 +186,7 @@ export default function EmployeeContactsPage() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-sans text-sm font-medium text-muted-foreground">Total Contacts</p>
+                  <p className="font-sans text-sm font-medium text-muted-foreground">إجمالي جهات الاتصال</p>
                   <h3 className="mt-2 font-sans text-3xl font-bold text-success">{totalContacts}</h3>
                 </div>
                 <div className="rounded-lg bg-success/10 p-3">
@@ -199,7 +199,7 @@ export default function EmployeeContactsPage() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-sans text-sm font-medium text-muted-foreground">Ready for Evaluation</p>
+                  <p className="font-sans text-sm font-medium text-muted-foreground">جاهز للتقييم</p>
                   <h3 className="mt-2 font-sans text-3xl font-bold text-primary">
                     {employees.filter((e) => e.contacts.length >= 3).length}
                   </h3>
@@ -215,7 +215,7 @@ export default function EmployeeContactsPage() {
         <div className="mb-6">
           <Button onClick={() => setIsAddingEmployee(true)} className="gap-2">
             <UserPlus className="h-4 w-4" />
-            Add New Employee
+            إضافة موظف جديد
           </Button>
         </div>
 
@@ -223,13 +223,13 @@ export default function EmployeeContactsPage() {
           {employees.length === 0 ? (
             <Card className="p-12 text-center">
               <Users className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-              <h3 className="text-lg font-semibold mb-2">No Employees Added</h3>
+              <h3 className="text-lg font-semibold mb-2">لم يتم إضافة موظفين</h3>
               <p className="text-muted-foreground mb-4">
-                Add your first employee to start building evaluation contacts
+                أضف موظفك الأول لبدء بناء جهات اتصال التقييم
               </p>
               <Button onClick={() => setIsAddingEmployee(true)}>
-                <UserPlus className="h-4 w-4 mr-2" />
-                Add Employee
+                <UserPlus className="h-4 w-4 ml-2" />
+                إضافة موظف
               </Button>
             </Card>
           ) : (
@@ -262,7 +262,7 @@ export default function EmployeeContactsPage() {
                 <CardContent>
                   <div className="flex items-center justify-between mb-4">
                     <h4 className="font-sans text-sm font-semibold text-foreground">
-                      Contacts ({employee.contacts.length})
+                      جهات الاتصال ({employee.contacts.length})
                     </h4>
                     <Button
                       size="sm"
@@ -272,15 +272,15 @@ export default function EmployeeContactsPage() {
                         setIsAddingContact(true)
                       }}
                     >
-                      <Plus className="h-4 w-4 mr-2" />
-                      Add Contact
+                      <Plus className="h-4 w-4 ml-2" />
+                      إضافة جهة اتصال
                     </Button>
                   </div>
 
                   {employee.contacts.length === 0 ? (
                     <div className="text-center py-8 border-2 border-dashed border-border rounded-lg">
                       <p className="text-sm text-muted-foreground">
-                        No contacts added yet. Add at least 3 contacts to enable evaluation.
+                        لم يتم إضافة جهات اتصال بعد. أضف 3 جهات اتصال على الأقل لتمكين التقييم.
                       </p>
                     </div>
                   ) : (
@@ -293,7 +293,7 @@ export default function EmployeeContactsPage() {
                               <Badge variant="outline" className={getRoleBadgeColor(contact.role)}>
                                 {getRoleLabel(contact.role)}
                               </Badge>
-                              <Badge variant="outline">{contact.language === "ar" ? "Arabic" : "English"}</Badge>
+                              <Badge variant="outline">{contact.language === "ar" ? "عربي" : "إنجليزي"}</Badge>
                             </div>
                             <div className="flex items-center gap-1 text-sm text-muted-foreground">
                               <Phone className="h-3 w-3" />
@@ -327,21 +327,21 @@ export default function EmployeeContactsPage() {
       <Dialog open={isAddingEmployee} onOpenChange={setIsAddingEmployee}>
         <DialogContent className="max-w-md">
           <DialogHeader>
-            <DialogTitle>Add New Employee</DialogTitle>
-            <DialogDescription>Enter the employee details to start building their evaluation profile</DialogDescription>
+            <DialogTitle>إضافة موظف جديد</DialogTitle>
+            <DialogDescription>أدخل تفاصيل الموظف لبدء بناء ملف التقييم الخاص به</DialogDescription>
           </DialogHeader>
           <div className="space-y-4 mt-4">
             <div className="space-y-2">
-              <Label htmlFor="emp-name">Employee Name *</Label>
+              <Label htmlFor="emp-name">اسم الموظف *</Label>
               <Input
                 id="emp-name"
-                placeholder="John Doe"
+                placeholder="أحمد محمد"
                 value={newEmployee.name}
                 onChange={(e) => setNewEmployee({ ...newEmployee, name: e.target.value })}
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="emp-email">Email *</Label>
+              <Label htmlFor="emp-email">البريد الإلكتروني *</Label>
               <Input
                 id="emp-email"
                 type="email"
@@ -351,7 +351,7 @@ export default function EmployeeContactsPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="emp-position">Position</Label>
+              <Label htmlFor="emp-position">المنصب</Label>
               <Input
                 id="emp-position"
                 placeholder="Senior Engineer"
@@ -360,7 +360,7 @@ export default function EmployeeContactsPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="emp-department">Department</Label>
+              <Label htmlFor="emp-department">القسم</Label>
               <Input
                 id="emp-department"
                 placeholder="IT Department"
@@ -390,7 +390,7 @@ export default function EmployeeContactsPage() {
           </DialogHeader>
           <div className="space-y-4 mt-4">
             <div className="space-y-2">
-              <Label htmlFor="contact-name">Contact Name *</Label>
+                <Label htmlFor="contact-name">اسم جهة الاتصال *</Label>
               <Input
                 id="contact-name"
                 placeholder="Ahmed Al-Balushi"
@@ -399,7 +399,7 @@ export default function EmployeeContactsPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="contact-phone">Phone Number *</Label>
+                <Label htmlFor="contact-phone">رقم الهاتف *</Label>
               <Input
                 id="contact-phone"
                 placeholder="+96812345678"
@@ -418,7 +418,7 @@ export default function EmployeeContactsPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="contact-role">Role / Relationship *</Label>
+                <Label htmlFor="contact-role">الدور / العلاقة *</Label>
               <Select
                 value={newContact.role}
                 onValueChange={(value: any) => setNewContact({ ...newContact, role: value })}
@@ -442,18 +442,18 @@ export default function EmployeeContactsPage() {
               </Select>
             </div>
             <div className="space-y-2">
-              <Label htmlFor="contact-language">Preferred Language *</Label>
+                <Label htmlFor="contact-language">اللغة المفضلة *</Label>
               <Select
                 value={newContact.language}
                 onValueChange={(value: any) => setNewContact({ ...newContact, language: value })}
               >
                 <SelectTrigger id="contact-language">
-                  <SelectValue placeholder="Select language" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="en">English</SelectItem>
-                  <SelectItem value="ar">Arabic</SelectItem>
-                </SelectContent>
+                    <SelectValue placeholder="اختر اللغة" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="en">إنجليزي</SelectItem>
+                    <SelectItem value="ar">عربي</SelectItem>
+                  </SelectContent>
               </Select>
             </div>
             <div className="flex gap-2 mt-6">
