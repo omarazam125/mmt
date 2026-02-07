@@ -110,8 +110,8 @@ export default function TranscriptsPage() {
       <DashboardHeader />
       <main className="flex-1 overflow-y-auto p-6">
         <div className="mb-6">
-          <h1 className="font-sans text-3xl font-bold text-foreground">Call Transcripts</h1>
-          <p className="mt-1 font-sans text-sm text-muted-foreground">Review detailed transcripts of all calls</p>
+          <h1 className="font-sans text-3xl font-bold text-foreground">نصوص المكالمات</h1>
+          <p className="mt-1 font-sans text-sm text-muted-foreground">مراجعة النصوص التفصيلية لجميع المكالمات</p>
         </div>
 
         {selectedTranscript && (
@@ -128,11 +128,11 @@ export default function TranscriptsPage() {
                 </div>
                 <div className="flex items-center gap-3">
                   <Badge variant="outline" className="bg-primary/20 text-primary border-primary/30">
-                    {selectedTranscript.language === "ar" ? "ARABIC" : "ENGLISH"}
+                    {selectedTranscript.language === "ar" ? "عربي" : "إنجليزي"}
                   </Badge>
                   <Button variant="outline" className="gap-2 bg-transparent">
                     <Download className="h-4 w-4" />
-                    Export
+                    تصدير
                   </Button>
                 </div>
               </div>
@@ -147,7 +147,7 @@ export default function TranscriptsPage() {
                   </div>
                 ) : (
                   <div className="text-center py-8">
-                    <p className="font-sans text-muted-foreground">No transcript available</p>
+                    <p className="font-sans text-muted-foreground">لا يوجد نص متاح</p>
                   </div>
                 )}
               </div>
@@ -162,7 +162,7 @@ export default function TranscriptsPage() {
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                   <Input
-                    placeholder="Search transcripts..."
+                    placeholder="بحث في النصوص..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="pl-10 font-sans"
@@ -171,22 +171,22 @@ export default function TranscriptsPage() {
               </div>
               <Select>
                 <SelectTrigger className="w-[180px] font-sans">
-                  <SelectValue placeholder="Language" />
+                  <SelectValue placeholder="اللغة" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Languages</SelectItem>
-                  <SelectItem value="ar">Arabic</SelectItem>
-                  <SelectItem value="en">English</SelectItem>
+                  <SelectItem value="all">جميع اللغات</SelectItem>
+                  <SelectItem value="ar">عربي</SelectItem>
+                  <SelectItem value="en">إنجليزي</SelectItem>
                 </SelectContent>
               </Select>
               <Select>
                 <SelectTrigger className="w-[180px] font-sans">
-                  <SelectValue placeholder="Date range" />
+                  <SelectValue placeholder="الفترة الزمنية" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="today">Today</SelectItem>
-                  <SelectItem value="week">This Week</SelectItem>
-                  <SelectItem value="month">This Month</SelectItem>
+                  <SelectItem value="today">اليوم</SelectItem>
+                  <SelectItem value="week">هذا الأسبوع</SelectItem>
+                  <SelectItem value="month">هذا الشهر</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -196,14 +196,14 @@ export default function TranscriptsPage() {
         <Card className="bg-card">
           <CardHeader>
             <CardTitle className="font-sans text-xl font-semibold text-card-foreground">
-              All Transcripts ({filteredTranscripts.length})
+              جميع النصوص ({filteredTranscripts.length})
             </CardTitle>
           </CardHeader>
           <CardContent>
             {loading ? (
               <div className="flex items-center justify-center py-12">
                 <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                <span className="ml-3 font-sans text-muted-foreground">Loading transcripts...</span>
+                <span className="ml-3 font-sans text-muted-foreground">جاري تحميل النصوص...</span>
               </div>
             ) : error ? (
               <div className="text-center py-12">

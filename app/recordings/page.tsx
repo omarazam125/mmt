@@ -181,8 +181,8 @@ export default function RecordingsPage() {
 
         <div className="mx-auto max-w-7xl mt-6 space-y-6">
           <div className="mb-6">
-            <h1 className="font-sans text-3xl font-bold text-foreground mb-2">Call Recordings</h1>
-            <p className="font-sans text-muted-foreground">Listen to and analyze call recordings</p>
+            <h1 className="font-sans text-3xl font-bold text-foreground mb-2">تسجيلات المكالمات</h1>
+            <p className="font-sans text-muted-foreground">الاستماع إلى تسجيلات المكالمات وتحليلها</p>
           </div>
 
           {loading ? (
@@ -215,7 +215,7 @@ export default function RecordingsPage() {
                           </p>
                         </div>
                         <Badge variant="outline" className="bg-primary/20 text-primary border-primary/30">
-                          COMPLETED
+                          مكتملة
                         </Badge>
                       </div>
 
@@ -268,7 +268,7 @@ export default function RecordingsPage() {
                           }}
                         >
                           <Download className="h-4 w-4" />
-                          Download
+                          تحميل
                         </Button>
                       </div>
                     </div>
@@ -283,7 +283,7 @@ export default function RecordingsPage() {
                       <div className="relative">
                         <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                         <Input
-                          placeholder="Search recordings..."
+                          placeholder="بحث في التسجيلات..."
                           value={searchQuery}
                           onChange={(e) => setSearchQuery(e.target.value)}
                           className="pl-10 font-sans"
@@ -292,12 +292,12 @@ export default function RecordingsPage() {
                     </div>
                     <Select>
                       <SelectTrigger className="w-[180px] font-sans">
-                        <SelectValue placeholder="Date range" />
+                        <SelectValue placeholder="الفترة الزمنية" />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="today">Today</SelectItem>
-                        <SelectItem value="week">This Week</SelectItem>
-                        <SelectItem value="month">This Month</SelectItem>
+                        <SelectItem value="today">اليوم</SelectItem>
+                        <SelectItem value="week">هذا الأسبوع</SelectItem>
+                        <SelectItem value="month">هذا الشهر</SelectItem>
                       </SelectContent>
                     </Select>
                   </div>
@@ -307,13 +307,13 @@ export default function RecordingsPage() {
               <Card className="bg-card">
                 <CardHeader>
                   <CardTitle className="font-sans text-xl font-semibold text-card-foreground">
-                    All Recordings ({filteredRecordings.length})
+                    جميع التسجيلات ({filteredRecordings.length})
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   {filteredRecordings.length === 0 ? (
                     <div className="text-center py-12">
-                      <p className="font-sans text-muted-foreground">No recordings found</p>
+                      <p className="font-sans text-muted-foreground">لا توجد تسجيلات</p>
                     </div>
                   ) : (
                     <div className="space-y-3">
@@ -364,7 +364,7 @@ export default function RecordingsPage() {
                                   </p>
                                 </div>
                                 <Badge variant="outline" className="bg-success/20 text-success border-success/30">
-                                  COMPLETED
+                                  مكتملة
                                 </Badge>
                                 <Button
                                   size="icon"

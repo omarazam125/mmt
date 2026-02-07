@@ -18,7 +18,7 @@ export function DashboardHeader() {
       <div className="flex flex-1 items-center gap-4">
         <div className="relative w-96">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-          <Input type="search" placeholder="Search calls, customers, transcripts..." className="pl-10 font-sans" />
+          <Input type="search" placeholder="بحث في المكالمات، العملاء، النصوص..." className="pl-10 font-sans" />
         </div>
       </div>
 
@@ -36,9 +36,9 @@ export function DashboardHeader() {
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuLabel>Admin Account</DropdownMenuLabel>
+            <DropdownMenuLabel>حساب المشرف</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Settings</DropdownMenuItem>
+            <DropdownMenuItem>الإعدادات</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

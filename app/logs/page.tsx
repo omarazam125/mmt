@@ -55,11 +55,11 @@ interface FullEvaluation {
 }
 
 const CUSTOMER_MOODS = {
-  happy: { label: "Happy", color: "bg-green-500/20 text-green-600 border-green-500/30" },
-  satisfied: { label: "Satisfied", color: "bg-blue-500/20 text-blue-600 border-blue-500/30" },
-  neutral: { label: "Neutral", color: "bg-gray-500/20 text-gray-600 border-gray-500/30" },
-  frustrated: { label: "Frustrated", color: "bg-orange-500/20 text-orange-600 border-orange-500/30" },
-  angry: { label: "Angry", color: "bg-red-500/20 text-red-600 border-red-500/30" },
+  happy: { label: "سعيد", color: "bg-green-500/20 text-green-600 border-green-500/30" },
+  satisfied: { label: "راضٍ", color: "bg-blue-500/20 text-blue-600 border-blue-500/30" },
+  neutral: { label: "محايد", color: "bg-gray-500/20 text-gray-600 border-gray-500/30" },
+  frustrated: { label: "محبط", color: "bg-orange-500/20 text-orange-600 border-orange-500/30" },
+  angry: { label: "غاضب", color: "bg-red-500/20 text-red-600 border-red-500/30" },
 }
 
 export default function CustomerRecordsPage() {
@@ -639,15 +639,15 @@ export default function CustomerRecordsPage() {
 
       console.log("[v0] Full evaluation generated and saved successfully")
       toast({
-        title: "Evaluation Generated",
-        description: `The full evaluation for ${evaluation.employeeName} has been generated successfully.`,
+        title: "تم إنشاء التقييم",
+        description: `تم إنشاء التقييم الشامل لـ ${evaluation.employeeName} بنجاح.`,
         variant: "success",
       })
     } catch (error) {
       console.error("[v0] Error generating full evaluation:", error)
       toast({
-        title: "Error",
-        description: `Failed to generate full evaluation for ${evaluation.employeeName}: ${error instanceof Error ? error.message : "Unknown error"}`,
+        title: "خطأ",
+        description: `فشل إنشاء التقييم الشامل لـ ${evaluation.employeeName}: ${error instanceof Error ? error.message : "خطأ غير معروف"}`,
         variant: "destructive",
       })
     } finally {
@@ -776,9 +776,9 @@ export default function CustomerRecordsPage() {
       <DashboardHeader />
       <main className="flex-1 overflow-y-auto p-6">
         <div className="mb-6">
-          <h1 className="font-sans text-3xl font-bold text-foreground">Customer Records</h1>
+          <h1 className="font-sans text-3xl font-bold text-foreground">سجلات المكالمات</h1>
           <p className="mt-1 font-sans text-sm text-muted-foreground">
-            View and manage all customer call interactions and evaluations
+            عرض وإدارة جميع تفاعلات المكالمات والتقييمات
           </p>
         </div>
 
@@ -787,9 +787,9 @@ export default function CustomerRecordsPage() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
                 <TrendingUp className="h-5 w-5" />
-                Full Employee Evaluations ({fullEvaluations.length})
+                تقييمات الموظفين الشاملة ({fullEvaluations.length})
               </CardTitle>
-              <CardDescription>Comprehensive evaluations combining all feedback for each employee</CardDescription>
+              <CardDescription>تقييمات شاملة تجمع جميع الملاحظات لكل موظف</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
@@ -812,26 +812,26 @@ export default function CustomerRecordsPage() {
                           }
                         >
                           {evaluation.status === "completed"
-                            ? "Evaluation Complete"
+                            ? "التقييم مكتمل"
                             : evaluation.status === "ready"
-                              ? "Ready for Evaluation"
-                              : "In Progress"}
+                              ? "جاهز للتقييم"
+                              : "قيد التنفيذ"}
                         </Badge>
                         {evaluation.metrics?.overallScore && (
                           <Badge variant="outline" className="bg-blue-500/20 text-blue-600 border-blue-500/30">
-                            Score: {evaluation.metrics.overallScore}/10
+                            التقييم: {evaluation.metrics.overallScore}/10
                           </Badge>
                         )}
                       </div>
                       <div className="flex items-center gap-6 text-sm text-muted-foreground">
                         <span>
-                          Calls: {evaluation.completedCalls}/{evaluation.totalCalls} completed
+                          المكالمات: {evaluation.completedCalls}/{evaluation.totalCalls} مكتملة
                         </span>
                         <span>
-                          Reports: {evaluation.reportsGenerated}/{evaluation.totalCalls} generated
+                          التقارير: {evaluation.reportsGenerated}/{evaluation.totalCalls} تم إنشاؤها
                         </span>
                         {evaluation.generatedAt && (
-                          <span>Evaluated: {new Date(evaluation.generatedAt).toLocaleDateString()}</span>
+                          <span>تاريخ التقييم: {new Date(evaluation.generatedAt).toLocaleDateString("ar-SA")}</span>
                         )}
                       </div>
                     </div>
@@ -846,12 +846,12 @@ export default function CustomerRecordsPage() {
                           {generatingFullEvalId === evaluation.employeeId ? (
                             <>
                               <Loader2 className="h-4 w-4 animate-spin" />
-                              Generating...
+                              جاري الإنشاء...
                             </>
                           ) : (
                             <>
                               <BarChart3 className="h-4 w-4" />
-                              Generate Full Evaluation
+                              إنشاء التقييم الشامل
                             </>
                           )}
                         </Button>
@@ -864,13 +864,13 @@ export default function CustomerRecordsPage() {
                           className="gap-2"
                         >
                           <FileText className="h-4 w-4" />
-                          View Full Evaluation
+                          عرض التقييم الشامل
                         </Button>
                       )}
                       {evaluation.status === "in-progress" && (
                         <div className="flex items-center gap-2 text-sm text-muted-foreground">
                           <Loader2 className="h-4 w-4 animate-spin" />
-                          Waiting for calls to complete...
+                          في انتظار اكتمال المكالمات...
                         </div>
                       )}
                     </div>
@@ -886,7 +886,7 @@ export default function CustomerRecordsPage() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-sans text-sm font-medium text-muted-foreground">Total Customers</p>
+                  <p className="font-sans text-sm font-medium text-muted-foreground">إجمالي السجلات</p>
                   <h3 className="mt-2 font-sans text-3xl font-bold text-card-foreground">{statusCounts.total}</h3>
                 </div>
                 <div className="rounded-lg bg-primary/10 p-3">
@@ -899,7 +899,7 @@ export default function CustomerRecordsPage() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-sans text-sm font-medium text-muted-foreground">Completed</p>
+                  <p className="font-sans text-sm font-medium text-muted-foreground">مكتملة</p>
                   <h3 className="mt-2 font-sans text-3xl font-bold text-success">{completedCount}</h3>
                 </div>
                 <div className="rounded-lg bg-success/10 p-3">
@@ -912,7 +912,7 @@ export default function CustomerRecordsPage() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-sans text-sm font-medium text-muted-foreground">In Progress</p>
+                  <p className="font-sans text-sm font-medium text-muted-foreground">قيد التنفيذ</p>
                   <h3 className="mt-2 font-sans text-3xl font-bold text-primary">{inProgressCount}</h3>
                 </div>
                 <div className="rounded-lg bg-primary/10 p-3">
@@ -925,7 +925,7 @@ export default function CustomerRecordsPage() {
             <CardContent className="p-6">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-sans text-sm font-medium text-muted-foreground">Urgent</p>
+                  <p className="font-sans text-sm font-medium text-muted-foreground">عاجلة</p>
                   <h3 className="mt-2 font-sans text-3xl font-bold text-destructive">{urgentCount}</h3>
                 </div>
                 <div className="rounded-lg bg-destructive/10 p-3">
@@ -943,7 +943,7 @@ export default function CustomerRecordsPage() {
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
                   <Input
-                    placeholder="Search by customer name or phone number..."
+                    placeholder="بحث بالاسم أو رقم الهاتف..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                     className="pl-10 font-sans"
@@ -952,29 +952,29 @@ export default function CustomerRecordsPage() {
               </div>
               <Select value={statusFilter} onValueChange={setStatusFilter}>
                 <SelectTrigger className="w-[180px] font-sans">
-                  <SelectValue placeholder="All Statuses" />
+                  <SelectValue placeholder="جميع الحالات" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All Statuses</SelectItem>
-                  <SelectItem value="completed">Completed</SelectItem>
-                  <SelectItem value="pending">Pending</SelectItem>
-                  <SelectItem value="in-progress">In Progress</SelectItem>
-                  <SelectItem value="no-answer">No Answer</SelectItem>
-                  <SelectItem value="failed">Failed</SelectItem>
+                  <SelectItem value="all">جميع الحالات</SelectItem>
+                  <SelectItem value="completed">مكتملة</SelectItem>
+                  <SelectItem value="pending">قيد الانتظار</SelectItem>
+                  <SelectItem value="in-progress">قيد التنفيذ</SelectItem>
+                  <SelectItem value="no-answer">لا إجابة</SelectItem>
+                  <SelectItem value="failed">فاشلة</SelectItem>
                 </SelectContent>
               </Select>
               <Select value={sortFilter} onValueChange={setSortFilter}>
                 <SelectTrigger className="w-[180px] font-sans">
-                  <SelectValue placeholder="Newest First" />
+                  <SelectValue placeholder="الأحدث أولاً" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="newest">Newest First</SelectItem>
-                  <SelectItem value="oldest">Oldest First</SelectItem>
+                  <SelectItem value="newest">الأحدث أولاً</SelectItem>
+                  <SelectItem value="oldest">الأقدم أولاً</SelectItem>
                 </SelectContent>
               </Select>
               <Button variant="outline" className="gap-2 bg-transparent">
                 <Loader2 className="h-4 w-4" />
-                Export CSV
+                تصدير CSV
               </Button>
             </div>
           </CardContent>
@@ -983,7 +983,7 @@ export default function CustomerRecordsPage() {
         <Card className="bg-card">
           <CardHeader>
             <CardTitle className="font-sans text-xl font-semibold text-card-foreground">
-              Customers ({filteredRecords.length})
+              السجلات ({filteredRecords.length})
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -994,7 +994,7 @@ export default function CustomerRecordsPage() {
             ) : filteredRecords.length === 0 ? (
               <div className="flex h-64 items-center justify-center">
                 <p className="font-sans text-sm text-muted-foreground">
-                  {searchQuery || statusFilter !== "all" ? "No customers match the filters" : "No customers found"}
+                  {searchQuery || statusFilter !== "all" ? "لا توجد نتائج تطابق البحث" : "لا توجد سجلات"}
                 </p>
               </div>
             ) : (
@@ -1002,15 +1002,15 @@ export default function CustomerRecordsPage() {
                 <Table>
                   <TableHeader>
                     <TableRow className="border-border hover:bg-transparent">
-                      <TableHead className="font-sans font-semibold text-foreground">Customer Name</TableHead>
-                      <TableHead className="font-mono text-sm text-muted-foreground">Phone Number</TableHead>
-                      <TableHead className="font-sans text-sm text-foreground">Date & Time</TableHead>
-                      <TableHead className="font-mono text-sm text-foreground">Duration</TableHead>
-                      <TableHead className="font-sans font-semibold text-foreground">Status</TableHead>
-                      <TableHead className="font-sans font-semibold text-foreground">Customer Mood</TableHead>
-                      <TableHead className="font-sans font-semibold text-foreground">Report</TableHead>
-                      <TableHead className="font-sans font-semibold text-foreground">Score</TableHead>
-                      <TableHead className="font-sans font-semibold text-foreground">Notes</TableHead>
+                      <TableHead className="font-sans font-semibold text-foreground">الاسم</TableHead>
+                      <TableHead className="font-mono text-sm text-muted-foreground">رقم الهاتف</TableHead>
+                      <TableHead className="font-sans text-sm text-foreground">التاريخ والوقت</TableHead>
+                      <TableHead className="font-mono text-sm text-foreground">المدة</TableHead>
+                      <TableHead className="font-sans font-semibold text-foreground">الحالة</TableHead>
+                      <TableHead className="font-sans font-semibold text-foreground">مزاج العميل</TableHead>
+                      <TableHead className="font-sans font-semibold text-foreground">التقرير</TableHead>
+                      <TableHead className="font-sans font-semibold text-foreground">التقييم</TableHead>
+                      <TableHead className="font-sans font-semibold text-foreground">ملاحظات</TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
@@ -1028,16 +1028,16 @@ export default function CustomerRecordsPage() {
                             <span className="flex items-center gap-1.5">
                               {getStatusIcon(record.status)}
                               {record.status === "completed"
-                                ? "Completed"
+                                ? "مكتملة"
                                 : record.status === "failed"
-                                  ? "Failed"
+                                  ? "فاشلة"
                                   : record.status === "no-answer"
-                                    ? "No Answer"
+                                    ? "لا إجابة"
                                     : record.status === "cancelled"
-                                      ? "Cancelled"
+                                      ? "ملغاة"
                                       : record.status === "pending"
-                                        ? "Pending"
-                                        : "In Progress"}
+                                        ? "قيد الانتظار"
+                                        : "قيد التنفيذ"}
                             </span>
                           </Badge>
                         </TableCell>
@@ -1062,7 +1062,7 @@ export default function CustomerRecordsPage() {
                               onClick={() => router.push(`/reports/${record.id}`)}
                             >
                               <FileText className="h-4 w-4" />
-                              View Report
+                              عرض التقرير
                             </Button>
                           ) : (
                             <Button
@@ -1075,12 +1075,12 @@ export default function CustomerRecordsPage() {
                               {generatingReportId === record.id ? (
                                 <>
                                   <Loader2 className="h-4 w-4 animate-spin" />
-                                  Generating...
+                                  جاري الإنشاء...
                                 </>
                               ) : (
                                 <>
                                   <FileText className="h-4 w-4" />
-                                  Generate Report
+                                  إنشاء التقرير
                                 </>
                               )}
                             </Button>
@@ -1105,7 +1105,7 @@ export default function CustomerRecordsPage() {
                             {record.notes ? (
                               <span className="max-w-[100px] truncate">{record.notes}</span>
                             ) : (
-                              "Add Notes"
+                              "إضافة ملاحظات"
                             )}
                           </Button>
                         </TableCell>
@@ -1121,18 +1121,18 @@ export default function CustomerRecordsPage() {
       <Dialog open={isNotesDialogOpen} onOpenChange={setIsNotesDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Notes for {editingNotes ? editingNotes.customerName : "Customer"}</DialogTitle>
-            <DialogDescription>Add or edit notes for this customer interaction</DialogDescription>
+            <DialogTitle>ملاحظات {editingNotes ? editingNotes.customerName : "العميل"}</DialogTitle>
+            <DialogDescription>إضافة أو تعديل الملاحظات لهذا التفاعل</DialogDescription>
           </DialogHeader>
           <Textarea
-            placeholder="Enter notes here..."
+            placeholder="أدخل الملاحظات هنا..."
             value={editingNotes ? editingNotes.notes : ""}
             onChange={(e) => setEditingNotes({ ...editingNotes!, notes: e.target.value })}
             rows={5}
           />
           <Button onClick={handleSaveNotes} className="mt-4">
             {/* This button should not have a loader by default, only during save */}
-            Save Notes
+            حفظ الملاحظات
           </Button>
         </DialogContent>
       </Dialog>
