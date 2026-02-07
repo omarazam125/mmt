@@ -12,7 +12,7 @@ You need to add the following environment variables to your project. Go to the *
 f
 1. **HAMSA_API_KEY** (Required)
    - Your Hamsa API key from https://dashboard.tryhamsa.com
-   - Example: `Token_xxxxxxxxxxxxxxxxxxxxx`
+   - Example: `Token_xxxxxxxxxxxxxxxxxxxxx`f
    - Keep this secure - do NOT use `NEXT_PUBLIC_` prefix
    - Note: The project ID will be automatically fetched from this key
 
