@@ -9,7 +9,7 @@ This dashboard integrates with Hamsa AI voice platform to provide automated cust
 You need to add the following environment variables to your project. Go to the **Vars** section in the in-chat sidebar to add them.
 
 ### Required Environment Variables
-
+f
 1. **HAMSA_API_KEY** (Required)
    - Your Hamsa API key from https://dashboard.tryhamsa.com
    - Example: `Token_xxxxxxxxxxxxxxxxxxxxx`
