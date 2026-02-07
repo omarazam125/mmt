@@ -7,14 +7,14 @@ import Image from "next/image"
 import { LayoutDashboard, Phone, FileText, Mic, Calendar, Radio, Users } from "lucide-react"
 
 const navigation = [
-  { name: "Overview", href: "/", icon: LayoutDashboard }, // Overview
-  { name: "Live Calls", href: "/live-calls", icon: Radio }, // Live Calls
-  { name: "Employee Contacts", href: "/employee-contacts", icon: Users }, // Employee Contacts
-  { name: "Start Call", href: "/calls", icon: Phone }, // Start Call
-  { name: "Customer Records", href: "/logs", icon: FileText }, // Customer Records
-  { name: "Recordings", href: "/recordings", icon: Mic }, // Recordings
-  { name: "Transcripts", href: "/transcripts", icon: FileText }, // Transcripts
-  { name: "Scheduling", href: "/scheduling", icon: Calendar }, // Scheduling
+  { name: "نظرة عامة", href: "/", icon: LayoutDashboard },
+  { name: "المكالمات المباشرة", href: "/live-calls", icon: Radio },
+  { name: "جهات اتصال الموظفين", href: "/employee-contacts", icon: Users },
+  { name: "بدء مكالمة", href: "/calls", icon: Phone },
+  { name: "سجلات العملاء", href: "/logs", icon: FileText },
+  { name: "التسجيلات", href: "/recordings", icon: Mic },
+  { name: "النصوص المكتوبة", href: "/transcripts", icon: FileText },
+  { name: "الجدولة", href: "/scheduling", icon: Calendar },
 ]
 
 export function DashboardSidebar() {
@@ -58,9 +58,9 @@ export function DashboardSidebar() {
         <div className="rounded-lg bg-card p-3">
           <div className="flex items-center gap-2">
             <div className="h-2 w-2 rounded-full bg-success animate-pulse" />
-            <span className="font-sans text-xs font-medium text-card-foreground">System Active</span>
+            <span className="font-sans text-xs font-medium text-card-foreground">النظام نشط</span>
           </div>
-          <p className="mt-1 font-sans text-xs text-muted-foreground">Connected</p>
+          <p className="mt-1 font-sans text-xs text-muted-foreground">متصل</p>
         </div>
       </div>
     </div>

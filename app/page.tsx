@@ -65,10 +65,10 @@ export default function DashboardPage() {
       <main className="flex-1 overflow-y-auto p-6">
         <div className="mb-6">
           <h1 className="font-sans text-3xl font-bold text-foreground">
-            Ministry of Transport, Communications and Information Technology
+            وزارة النقل والاتصالات وتقنية المعلومات
           </h1>
           <p className="mt-1 font-sans text-sm text-muted-foreground">
-            Employee Performance Evaluation System - Main Dashboard
+            نظام تقييم أداء الموظفين - لوحة التحكم الرئيسية
           </p>
         </div>
 
@@ -78,29 +78,29 @@ export default function DashboardPage() {
 
         <div className="mb-6 grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           <StatCard
-            title="Total Calls"
+            title="إجمالي المكالمات"
             value={isLoading ? "..." : stats.totalCalls.toString()}
-            change="Live Data"
+            change="بيانات مباشرة"
             changeType="positive"
             icon={Phone}
           />
           <StatCard
-            title="Active Calls"
+            title="المكالمات النشطة"
             value={isLoading ? "..." : stats.activeCalls.toString()}
-            description="Currently in progress"
+            description="قيد التنفيذ حالياً"
             icon={PhoneCall}
           />
           <StatCard
-            title="Average Call Duration"
+            title="متوسط مدة المكالمة"
             value={isLoading ? "..." : stats.avgDuration}
-            change="Real-time data"
+            change="بيانات فورية"
             changeType="positive"
             icon={Clock}
           />
           <StatCard
-            title="Success Rate"
+            title="معدل النجاح"
             value={isLoading ? "..." : stats.successRate}
-            change="Calculated from calls"
+            change="محسوب من المكالمات"
             changeType="positive"
             icon={CheckCircle2}
           />
@@ -108,36 +108,36 @@ export default function DashboardPage() {
 
         <div className="mb-6 grid gap-6 md:grid-cols-3">
           <StatCard
-            title="Registered Employees"
+            title="الموظفون المسجلون"
             value={employeeCount.toString()}
-            description="Available for evaluation"
+            description="متاح للتقييم"
             icon={Users}
           />
-          <StatCard title="Scheduled Calls" value="156" description="Within next 24 hours" icon={Calendar} />
-          <StatCard title="Satisfaction Rate" value="91%" description="Overall performance" icon={UserCheck} />
+          <StatCard title="المكالمات المجدولة" value="156" description="خلال الـ 24 ساعة القادمة" icon={Calendar} />
+          <StatCard title="معدل الرضا" value="91%" description="الأداء الإجمالي" icon={UserCheck} />
         </div>
 
         <Card className="mb-6 bg-card">
           <CardHeader>
-            <CardTitle className="font-sans text-xl font-semibold text-card-foreground">Quick Actions</CardTitle>
+            <CardTitle className="font-sans text-xl font-semibold text-card-foreground">إجراءات سريعة</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
               <Button className="h-auto flex-col gap-2 py-6 bg-transparent" variant="outline">
                 <Phone className="h-6 w-6" />
-                <span className="font-sans text-sm font-medium">Make a Call</span>
+                <span className="font-sans text-sm font-medium">إجراء مكالمة</span>
               </Button>
               <Button className="h-auto flex-col gap-2 py-6 bg-transparent" variant="outline">
                 <Calendar className="h-6 w-6" />
-                <span className="font-sans text-sm font-medium">Schedule Call</span>
+                <span className="font-sans text-sm font-medium">جدولة مكالمة</span>
               </Button>
               <Button className="h-auto flex-col gap-2 py-6 bg-transparent" variant="outline">
                 <Users className="h-6 w-6" />
-                <span className="font-sans text-sm font-medium">View Customers</span>
+                <span className="font-sans text-sm font-medium">عرض العملاء</span>
               </Button>
               <Button className="h-auto flex-col gap-2 py-6 bg-transparent" variant="outline">
                 <TrendingUp className="h-6 w-6" />
-                <span className="font-sans text-sm font-medium">View Analytics</span>
+                <span className="font-sans text-sm font-medium">عرض التحليلات</span>
               </Button>
             </div>
           </CardContent>

@@ -335,9 +335,9 @@ export default function CallsPage() {
       <DashboardHeader />
       <main className="flex-1 overflow-y-auto p-6">
         <div className="mb-6">
-          <h1 className="font-sans text-3xl font-bold text-foreground">Employee Evaluation - Start Call</h1>
+          <h1 className="font-sans text-3xl font-bold text-foreground">تقييم الموظف - بدء مكالمة</h1>
           <p className="mt-1 font-sans text-sm text-muted-foreground">
-            Select an employee to begin automated evaluation calls with their professional contacts
+            اختر موظفاً لبدء مكالمات التقييم التلقائية مع جهات الاتصال المهنية الخاصة به
           </p>
         </div>
 
@@ -345,9 +345,9 @@ export default function CallsPage() {
           <Card className="bg-card">
             <CardHeader>
               <CardTitle className="font-sans text-xl font-semibold text-card-foreground">
-                Select Employee for Evaluation
+                اختر موظفاً للتقييم
               </CardTitle>
-              <CardDescription>Choose an employee who has at least 2 contacts configured</CardDescription>
+              <CardDescription>اختر موظفاً لديه جهتا اتصال على الأقل</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               {callError && (
@@ -357,17 +357,17 @@ export default function CallsPage() {
               )}
 
               <div className="space-y-2">
-                <Label className="font-sans text-sm font-medium">Employee *</Label>
+                <Label className="font-sans text-sm font-medium">الموظف *</Label>
                 <Select onValueChange={handleEmployeeSelect} value={selectedEmployee?.id || ""}>
                   <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select an employee to evaluate" />
+                    <SelectValue placeholder="اختر موظفاً للتقييم" />
                   </SelectTrigger>
                   <SelectContent>
                     {employees.length === 0 ? (
                       <div className="p-4 text-center text-sm text-muted-foreground">
-                        No employees with 2+ contacts found.
+                        لم يتم العثور على موظفين لديهم جهتا اتصال أو أكثر.
                         <br />
-                        Add contacts in Employee Contacts page.
+                        أضف جهات اتصال في صفحة جهات اتصال الموظفين.
                       </div>
                     ) : (
                       employees.map((employee) => (
@@ -375,7 +375,7 @@ export default function CallsPage() {
                           <div className="flex items-center gap-2">
                             <Users className="h-4 w-4" />
                             <span className="font-medium">{employee.name}</span>
-                            <span className="text-xs text-muted-foreground">({employee.contacts.length} contacts)</span>
+                            <span className="text-xs text-muted-foreground">({employee.contacts.length} جهات اتصال)</span>
                           </div>
                         </SelectItem>
                       ))
@@ -388,29 +388,29 @@ export default function CallsPage() {
                 <>
                   <div className="mt-6 p-4 bg-muted/50 rounded-lg space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-sm font-semibold">Employee Information</span>
+                      <span className="text-sm font-semibold">معلومات الموظف</span>
                     </div>
                     <div className="grid grid-cols-2 gap-3 text-sm">
                       <div>
-                        <span className="text-muted-foreground">Name:</span>
-                        <span className="ml-2 font-medium">{selectedEmployee.name}</span>
+                        <span className="text-muted-foreground">الاسم:</span>
+                        <span className="mr-2 font-medium">{selectedEmployee.name}</span>
                       </div>
                       {selectedEmployee.position && (
                         <div>
-                          <span className="text-muted-foreground">Position:</span>
-                          <span className="ml-2 font-medium">{selectedEmployee.position}</span>
+                          <span className="text-muted-foreground">المنصب:</span>
+                          <span className="mr-2 font-medium">{selectedEmployee.position}</span>
                         </div>
                       )}
                       {selectedEmployee.email && (
                         <div className="col-span-2">
-                          <span className="text-muted-foreground">Email:</span>
-                          <span className="ml-2 font-medium">{selectedEmployee.email}</span>
+                          <span className="text-muted-foreground">البريد الإلكتروني:</span>
+                          <span className="mr-2 font-medium">{selectedEmployee.email}</span>
                         </div>
                       )}
                       {selectedEmployee.department && (
                         <div className="col-span-2">
-                          <span className="text-muted-foreground">Department:</span>
-                          <span className="ml-2 font-medium">{selectedEmployee.department}</span>
+                          <span className="text-muted-foreground">القسم:</span>
+                          <span className="mr-2 font-medium">{selectedEmployee.department}</span>
                         </div>
                       )}
                     </div>
@@ -419,7 +419,7 @@ export default function CallsPage() {
                   <div className="mt-6">
                     <div className="flex items-center justify-between mb-4">
                       <h3 className="font-sans text-sm font-semibold text-foreground">
-                        Contacts to be Called ({selectedEmployee.contacts.length})
+                        جهات الاتصال التي سيتم الاتصال بها ({selectedEmployee.contacts.length})
                       </h3>
                     </div>
 
@@ -445,7 +445,7 @@ export default function CallsPage() {
                           {callingContactIds.has(contact.id) && (
                             <div className="flex items-center gap-2 text-success">
                               <CheckCircle2 className="h-5 w-5" />
-                              <span className="text-sm font-medium">Calling...</span>
+                              <span className="text-sm font-medium">جاري الاتصال...</span>
                             </div>
                           )}
                         </div>
@@ -467,17 +467,17 @@ export default function CallsPage() {
                       {isSendingEmail ? (
                         <>
                           <Loader2 className="h-5 w-5 animate-spin" />
-                          Sending Email...
+                          جاري الإرسال...
                         </>
                       ) : notifiedEmployees.has(selectedEmployee.id) ? (
                         <>
                           <CheckCircle2 className="h-5 w-5" />
-                          Notified ✓
+                          تم الإرسال ✓
                         </>
                       ) : (
                         <>
                           <Mail className="h-5 w-5" />
-                          Email Notification
+                          إرسال إشعار بالبريد
                         </>
                       )}
                     </Button>
@@ -491,12 +491,12 @@ export default function CallsPage() {
                       {isCallLoading ? (
                         <>
                           <Loader2 className="h-5 w-5 animate-spin" />
-                          Starting Calls...
+                          جاري بدء المكالمات...
                         </>
                       ) : (
                         <>
                           <Phone className="h-5 w-5" />
-                          Start Evaluation ({selectedEmployee.contacts.length} Calls)
+                          بدء التقييم ({selectedEmployee.contacts.length} مكالمة)
                         </>
                       )}
                     </Button>
@@ -510,14 +510,14 @@ export default function CallsPage() {
             <CardHeader>
               <CardTitle className="font-sans text-lg font-semibold text-card-foreground flex items-center gap-2">
                 <div className="h-2 w-2 rounded-full bg-success animate-pulse" />
-                Live Calls ({liveCalls.length})
+                المكالمات المباشرة ({liveCalls.length})
               </CardTitle>
             </CardHeader>
             <CardContent>
               {liveCalls.length === 0 ? (
                 <div className="text-center py-8">
                   <PhoneMissed className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
-                  <p className="text-sm text-muted-foreground">No active calls</p>
+                  <p className="text-sm text-muted-foreground">لا توجد مكالمات نشطة</p>
                 </div>
               ) : (
                 <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
@@ -536,10 +536,10 @@ export default function CallsPage() {
                               : "bg-warning/20 text-warning border-warning/30"
                           }
                         >
-                          {call.status}
+                          {call.status === "In Progress" ? "قيد التنفيذ" : "جاري الاتصال..."}
                         </Badge>
                       </div>
-                      <div className="text-xs text-muted-foreground">Duration: {call.duration}</div>
+                      <div className="text-xs text-muted-foreground">المدة: {call.duration}</div>
                     </div>
                   ))}
                 </div>

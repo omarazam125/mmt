@@ -7,9 +7,9 @@ import { DashboardSidebar } from "@/components/dashboard-sidebar"
 import { Suspense } from "react"
 
 export const metadata: Metadata = {
-  title: "Almoayyed - Customer Service Dashboard",
+  title: "المعيد - لوحة تحكم خدمة العملاء",
   description:
-    "Professional customer service management dashboard for Yusuf Khalil Almoayyed & Sons - A leading company in the Kingdom of Bahrain",
+    "لوحة تحكم احترافية لإدارة خدمة العملاء لشركة يوسف خليل المعيد وأولاده - شركة رائدة في مملكة البحرين",
   generator: "v0.app",
 }
 
@@ -29,10 +29,10 @@ export default async function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" dir="ltr" className={`${inter.className} ${jetbrainsMono.className}`}>
+    <html lang="ar" dir="rtl" className={`${inter.className} ${jetbrainsMono.className}`}>
       <body className="font-sans">
         <div className="flex h-screen w-full overflow-hidden">
-          <Suspense fallback={<div>Loading...</div>}>
+          <Suspense fallback={<div>جاري التحميل...</div>}>
             <DashboardSidebar />
             <div className="flex-1 overflow-y-auto">{children}</div>
           </Suspense>
